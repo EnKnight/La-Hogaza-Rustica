@@ -28,7 +28,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   private GoogleApiClient apiClient;
   private static final int REQUEST_LOCATION = 2;
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
