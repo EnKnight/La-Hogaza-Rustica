@@ -15,6 +15,23 @@
     android:layout_width="match_parent"
     android:layout_height="400dp"
     />
+  <!-- <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/cielo"
+    android:text="cielo: "/>
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/temperatura"
+    android:layout_below="@+id/cielo"
+    android:text="temperatura: "/>
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/humedad"
+    android:layout_below="@+id/temperatura"
+    android:text="humedad"/> -->
   <TextView android:id="@+id/lblLatitud"
     android:layout_below="@+id/map"
     android:layout_width="wrap_content"
@@ -33,5 +50,14 @@
     android:layout_below="@+id/lblLongitud"
     android:textOn="Parar actualizaciones"
     android:textOff="Iniciar actualizaciones" />
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="cielo: "
+    android:id="@+id/cielo"
+    android:layout_above="@+id/actualizar"
+    android:layout_toRightOf="@+id/lblLatitud"
+    android:layout_toEndOf="@+id/lblLatitud" />
 
 </RelativeLayout>

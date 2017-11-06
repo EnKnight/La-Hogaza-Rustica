@@ -20,13 +20,19 @@ import android.widget.ToggleButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MenuPrincipalActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener  {
-  private TextView lblLatitud, lblLongitud;
+  private TextView lblLatitud, lblLongitud, lblCielo;
   private Button actualizar;
   private Location lastLocation;
   private GoogleApiClient apiClient;
   private static final int REQUEST_LOCATION = 2;
+  private DatabaseReference dbCielo = FirebaseDatabase.getInstance().getReference().child("prediccion-hoy").child("cielo");
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +50,19 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
         .addApi(LocationServices.API)
         .build();
     }
+    dbCielo.addValueEventListener(new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot dataSnapshot) {
+        String valor = dataSnapshot.getValue().toString();
+        lblCielo.setText(valor);
+      }
 
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+        //Log.e(TAGLOG, "Error!", databaseError.toException());
+      }
+    });
+    lblCielo = (TextView)findViewById(R.id.cielo);
     lblLatitud = (TextView) findViewById(R.id.lblLatitud);
     lblLongitud = (TextView) findViewById(R.id.lblLongitud);
     actualizar = (Button) findViewById(R.id.actualizar);
