@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "789407104659",
+    "firebase_url": "https://la-hogaza-rustica.firebaseio.com",
+    "project_id": "la-hogaza-rustica",
+    "storage_bucket": "la-hogaza-rustica.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789407104659:android:ad48c1bfe6058706",
+        "android_client_info": {
+          "package_name": "com.example.rafaelaranda.pruebahogazarustica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789407104659-1nrvng8s9tsdkr92prnef6vpgcpns8jd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rafaelaranda.pruebahogazarustica",
+            "certificate_hash": "01263e74103709dde9f907dbc9596af43d1fb0ef"
+          }
+        },
+        {
+          "client_id": "789407104659-8ibmr8o3g46vgvlm2140c99a6i1g3q96.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcLNuFNPb3fPfrSk7fs29QDQEiXsLVnCY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789407104659-8ibmr8o3g46vgvlm2140c99a6i1g3q96.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
