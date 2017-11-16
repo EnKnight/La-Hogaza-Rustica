@@ -21,9 +21,12 @@ import android.widget.ToggleButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +44,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   private FirebaseAuth auth;
   private GoogleMap map;
   private MapFragment mapFragment;
+  private static boolean mapReady = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
 
     mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
     mapFragment.getMapAsync(this);
+
 
     /*DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
     float dpHeight = displayMetrics.heightPixels / displayMetrics.density;*/
@@ -119,13 +124,14 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
 
   @Override
   public void onConnected(@Nullable Bundle bundle) {
-    Toast.makeText(this, "Conectado a Google Play Services :D", Toast.LENGTH_LONG).show();
+    //Toast.makeText(this, "Conectado a Google Play Services :D", Toast.LENGTH_LONG).show();
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
       // Check Permissions Now
       ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
     } else {
       // permission has been granted, continue as usual
       lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+      moverMapaUltimaPosicionUsuario(lastLocation);
       updateUI(lastLocation);
     }
 
@@ -173,6 +179,15 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   public void onLocationChanged(Location location) {
     Toast.makeText(this, "Latitud: "+location.getLatitude()+", Longitud: "+location.getLongitude(), Toast.LENGTH_LONG).show();
     updateUI(location);
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      // Check Permissions Now
+      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+    } else {
+      // permission has been granted, continue as usual
+      lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+      moverMapaUltimaPosicionUsuario(lastLocation);
+      updateUI(lastLocation);
+    }
   }
 
   @Override
@@ -192,6 +207,34 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
 
   @Override
   public void onMapReady(GoogleMap googleMap) {
+    mapReady = true;
     map = googleMap;
+    map.getUiSettings().setZoomControlsEnabled(true);
+    map.getUiSettings().setMyLocationButtonEnabled(true);
+    CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(21.8564522, -102.3315615), 10);
+    //map.moveCamera(camUpd1);
+    map.animateCamera(camUpd);
+
+    /*if(lastLocation != null){
+      Toast.makeText(getApplicationContext(), "Moviéndonos a la ubicación del usuario en "+lastLocation.getLatitude()+", "+lastLocation.getLongitude()+" :D", Toast.LENGTH_LONG).show();
+      CameraUpdate camUpd1 = CameraUpdateFactory.newLatLngZoom(new LatLng(40.41, -3.69), 5);
+      //map.moveCamera(camUpd1);
+      map.animateCamera(camUpd1);
+    } else {
+      Toast.makeText(getApplicationContext(), "Ubicación del usuario no obtenida", Toast.LENGTH_LONG).show();
+
+    }*/
+  }
+
+  public void moverMapaUltimaPosicionUsuario(Location location){
+    if(mapReady){
+      if (location != null){
+        CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17);
+        //map.moveCamera(camUpd1);
+        map.animateCamera(camUpd);
+      } else {
+        Toast.makeText(getApplicationContext(), "Ubicación del usuario no obtenida", Toast.LENGTH_LONG).show();
+      }
+    }
   }
 }
