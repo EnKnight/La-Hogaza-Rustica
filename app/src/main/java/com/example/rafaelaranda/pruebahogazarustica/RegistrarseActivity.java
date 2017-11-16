@@ -80,7 +80,6 @@ public class RegistrarseActivity extends AppCompatActivity {
           return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
         //create user
         auth.createUserWithEmailAndPassword(correo.getText().toString().trim(), passwd.getText().toString().trim())
           .addOnCompleteListener(RegistrarseActivity.this, new OnCompleteListener<AuthResult>() {

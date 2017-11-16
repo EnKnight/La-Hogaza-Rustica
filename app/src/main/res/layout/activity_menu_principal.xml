@@ -51,13 +51,13 @@
     android:textOn="Parar actualizaciones"
     android:textOff="Iniciar actualizaciones" />
 
-  <TextView
+  <!-- <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="cielo: "
     android:id="@+id/cielo"
     android:layout_above="@+id/actualizar"
     android:layout_toRightOf="@+id/lblLatitud"
-    android:layout_toEndOf="@+id/lblLatitud" />
+    android:layout_toEndOf="@+id/lblLatitud" /> -->
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.rafaelaranda.pruebahogazarustica;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -20,6 +21,7 @@ import android.widget.ToggleButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,22 +35,34 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   private GoogleApiClient apiClient;
   private static final int REQUEST_LOCATION = 2;
   private DatabaseReference dbCielo = FirebaseDatabase.getInstance().getReference().child("prediccion-hoy").child("cielo");
+  private FirebaseAuth auth;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_menu_principal);
 
+    //Get Firebase auth instance
+    auth = FirebaseAuth.getInstance();
+
+    if (auth.getCurrentUser() == null) {
+      Toast.makeText(this, "Favor de identificarse antes de continuar", Toast.LENGTH_LONG).show();
+      startActivity(new Intent(MenuPrincipalActivity.this, IniciarSesionActivity.class));
+      finish();
+    }
+
     /*DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
     float dpHeight = displayMetrics.heightPixels / displayMetrics.density;*/
     // Create an instance of GoogleAPIClient.
     if (apiClient == null) {
-      Toast.makeText(this, "Creando instancia de conexión a servicios de google play", Toast.LENGTH_LONG).show();
+      //Toast.makeText(this, "Creando instancia de conexión a servicios de google play", Toast.LENGTH_LONG).show();
       apiClient = new GoogleApiClient.Builder(this)
         .addConnectionCallbacks(this)
         .addOnConnectionFailedListener(this)
         .addApi(LocationServices.API)
         .build();
+    } else {
+      auth.getCurrentUser();
     }
     dbCielo.addValueEventListener(new ValueEventListener() {
       @Override
@@ -62,7 +76,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
         //Log.e(TAGLOG, "Error!", databaseError.toException());
       }
     });
-    lblCielo = (TextView)findViewById(R.id.cielo);
+    //lblCielo = (TextView)findViewById(R.id.cielo);
     lblLatitud = (TextView) findViewById(R.id.lblLatitud);
     lblLongitud = (TextView) findViewById(R.id.lblLongitud);
     actualizar = (Button) findViewById(R.id.actualizar);
