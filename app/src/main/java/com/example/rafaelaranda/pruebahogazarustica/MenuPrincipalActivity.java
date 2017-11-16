@@ -21,6 +21,9 @@ import android.widget.ToggleButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MenuPrincipalActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener  {
+public class MenuPrincipalActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener, OnMapReadyCallback {
   private TextView lblLatitud, lblLongitud, lblCielo;
   private Button actualizar;
   private Location lastLocation;
@@ -36,11 +39,16 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   private static final int REQUEST_LOCATION = 2;
   private DatabaseReference dbCielo = FirebaseDatabase.getInstance().getReference().child("prediccion-hoy").child("cielo");
   private FirebaseAuth auth;
+  private GoogleMap map;
+  private MapFragment mapFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_menu_principal);
+
+    mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+    mapFragment.getMapAsync(this);
 
     /*DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
     float dpHeight = displayMetrics.heightPixels / displayMetrics.density;*/
@@ -180,5 +188,10 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   @Override
   public void onProviderDisabled(String s) {
 
+  }
+
+  @Override
+  public void onMapReady(GoogleMap googleMap) {
+    map = googleMap;
   }
 }
