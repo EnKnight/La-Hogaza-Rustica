@@ -44,12 +44,11 @@
     android:layout_height="wrap_content"
     android:text="Longitud: " />
 
-  <ToggleButton android:id="@+id/actualizar"
+  <Button android:id="@+id/pedido"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@+id/lblLongitud"
-    android:textOn="Parar actualizaciones"
-    android:textOff="Iniciar actualizaciones" />
+    android:text="Proceder a pedido" />
 
   <!-- <TextView
     android:layout_width="wrap_content"
