@@ -27,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,7 +45,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   private FirebaseAuth auth;
   private GoogleMap map;
   private MapFragment mapFragment;
-  private static boolean mapReady = false;
+  private static boolean mapReady = false, markerSet = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -211,8 +212,9 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
     map = googleMap;
     map.getUiSettings().setZoomControlsEnabled(true);
     map.getUiSettings().setMyLocationButtonEnabled(true);
-    CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(21.8564522, -102.3315615), 10);
-    //map.moveCamera(camUpd1);
+    map.getUiSettings().setMapToolbarEnabled(true);
+
+    CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(21.8564522, -102.3315615), 11);
     map.animateCamera(camUpd);
 
     /*if(lastLocation != null){
@@ -232,6 +234,11 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
         CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17);
         //map.moveCamera(camUpd1);
         map.animateCamera(camUpd);
+        if(!markerSet){
+          map.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("pedido"));
+          markerSet = true;
+        }
+
       } else {
         Toast.makeText(getApplicationContext(), "Ubicación del usuario no obtenida", Toast.LENGTH_LONG).show();
       }
