@@ -42,6 +42,8 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_menu_principal);
 
+    /*DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+    float dpHeight = displayMetrics.heightPixels / displayMetrics.density;*/
     //Get Firebase auth instance
     auth = FirebaseAuth.getInstance();
 
@@ -51,8 +53,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
       finish();
     }
 
-    /*DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-    float dpHeight = displayMetrics.heightPixels / displayMetrics.density;*/
     // Create an instance of GoogleAPIClient.
     if (apiClient == null) {
       //Toast.makeText(this, "Creando instancia de conexión a servicios de google play", Toast.LENGTH_LONG).show();
@@ -64,7 +64,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
     } else {
       auth.getCurrentUser();
     }
-    dbCielo.addValueEventListener(new ValueEventListener() {
+    /*dbCielo.addValueEventListener(new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
         String valor = dataSnapshot.getValue().toString();
@@ -75,7 +75,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
       public void onCancelled(DatabaseError databaseError) {
         //Log.e(TAGLOG, "Error!", databaseError.toException());
       }
-    });
+    });*/
     //lblCielo = (TextView)findViewById(R.id.cielo);
     lblLatitud = (TextView) findViewById(R.id.lblLatitud);
     lblLongitud = (TextView) findViewById(R.id.lblLongitud);
