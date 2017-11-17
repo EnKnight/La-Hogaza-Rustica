@@ -37,7 +37,8 @@
       android:name=".PruebaNavigationDrawerActivity"
       android:label="@string/title_activity_prueba_navigation_drawer"
       android:theme="@style/AppTheme.NoActionBar" />
-    <activity android:name=".MenuPedidoActivity"></activity>
+    <activity android:name=".MenuPedidoActivity" />
+    <activity android:name=".DetallePanActivity"></activity>
   </application>
 
 </manifest>
