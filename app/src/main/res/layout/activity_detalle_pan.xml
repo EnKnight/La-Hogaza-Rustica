@@ -15,4 +15,46 @@
     android:id="@+id/bienvenida"
     android:textSize="25dp"
     android:layout_centerHorizontal="true"/>
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/descripcion"
+    android:layout_below="@+id/bienvenida"
+    android:layout_marginTop="15dp"
+    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin venenatis consequat feugiat. Pellentesque consequat dui id urna ornare elementum. Mauris vestibulum velit sit amet augue pretium hendrerit. Aliquam tincidunt neque vitae est lobortis, at maximus mauris fringilla. Vestibulum vitae risus non erat pretium tincidunt id id ipsum. Etiam eu tortor nec dolor feugiat rutrum in in lorem. Nulla mauris diam, tristique in lectus sed, ultricies posuere metus. Vestibulum turpis mi, tincidunt eget nisl ac, facilisis condimentum massa. Etiam dui nisi, semper ac mattis sed, elementum at magna. "/>
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/precio"
+    android:text="Precio: $50"
+    android:layout_marginTop="15dp"
+    android:layout_below="@+id/descripcion"/>
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/totalpagar"
+    android:layout_below="@+id/precio"
+    android:text="Total acumulado del pedido: "
+    android:layout_marginTop="15dp"/>
+
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/line1"
+    android:layout_marginTop="15dp"
+    android:layout_below="@+id/totalpagar">
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/agregar"
+      android:text="Agregar al pedido"/>
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/pagar"
+      android:text="Concluir pedido"/>
+  </LinearLayout>
+
 </RelativeLayout>

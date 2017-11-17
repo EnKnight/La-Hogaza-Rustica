@@ -30,7 +30,7 @@ public class MenuPedidoActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_menu_pedido);
 
-    ingredientesref = FirebaseDatabase.getInstance().getReference().child("pan");
+    /*ingredientesref = FirebaseDatabase.getInstance().getReference().child("pan");
     valueEventListener = new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
@@ -46,7 +46,7 @@ public class MenuPedidoActivity extends AppCompatActivity {
       }
     };
 
-    ingredientesref.addListenerForSingleValueEvent(valueEventListener);
+    ingredientesref.addListenerForSingleValueEvent(valueEventListener);*/
 
     adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, datos);
     lista = (ListView)findViewById(R.id.lista);
