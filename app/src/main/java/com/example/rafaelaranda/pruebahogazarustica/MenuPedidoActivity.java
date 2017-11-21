@@ -3,6 +3,7 @@ package com.example.rafaelaranda.pruebahogazarustica;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,66 +24,42 @@ import com.google.firebase.database.ValueEventListener;
 public class MenuPedidoActivity extends AppCompatActivity {
   private ValueEventListener valueEventListener;
   private DatabaseReference ingredientesref;
+  private TextView pedido;
   //private String ingredientes[];
-  private static String[] datos = {"Chile serrano","Ajo","Orégano","Avena con salvado","Zanahoria", "Chocolate", "Café"};
+  private static String[] datos = {"Chile serrano","Ajo","Orégano","Avena con salvado","Zanahoria", "Chocolate", "Café"/*,
+    "Chile serrano","Ajo","Orégano","Avena con salvado","Zanahoria", "Chocolate", "Café"*/};
   public static String ingredientesel;
   private ListView lista;
   ArrayAdapter<String> adaptador;
   private CheckBox ingredientes[] = new CheckBox[datos.length];
   private RelativeLayout layout;
+  private DisplayMetrics displayMetrics = new DisplayMetrics();
+  private int scwidth, scheight;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_menu_pedido);
 
-    ScrollView sv = new ScrollView(this);
-    final LinearLayout ll = new LinearLayout(this);
-    ll.setOrientation(LinearLayout.VERTICAL);
-    sv.addView(ll);
+    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+    scwidth = displayMetrics.widthPixels;
+    scheight = displayMetrics.heightPixels;
 
-    layout = (RelativeLayout)findViewById(R.id.layout);
-
-    for(byte i=0; i<datos.length; i++){
-      ingredientes[i] = new CheckBox(getApplicationContext());
-      ingredientes[i].setText(datos[i]);
-      ingredientes[i].setEnabled(false);
-      //ingredientes[i].
-      ll.addView(ingredientes[i]);
-      //layout.addView(ingredientes[i]);
-
-    }
-
-    Toast.makeText(this, "ingredientes: "+ingredientes.length, Toast.LENGTH_LONG).show();
-
-    /*ingredientesref = FirebaseDatabase.getInstance().getReference().child("pan");
-    valueEventListener = new ValueEventListener() {
-      @Override
-      public void onDataChange(DataSnapshot dataSnapshot) {
-        Toast.makeText(getApplicationContext(), "nodos anidados: "+dataSnapshot.getChildrenCount(), Toast.LENGTH_LONG).show();
-        for(byte i=0; i<dataSnapshot.getChildrenCount(); i++){
-
-        }
-      }
-
-      @Override
-      public void onCancelled(DatabaseError databaseError) {
-
-      }
-    };
-
-    ingredientesref.addListenerForSingleValueEvent(valueEventListener);*/
+    lista = (ListView)findViewById(R.id.lista);
+    pedido = (TextView)findViewById(R.id.pedido);
 
     adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, datos);
-    /*lista = (ListView)findViewById(R.id.lista);
     lista.setAdapter(adaptador);
+
     lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        ingredientesel = datos[i];
-        startActivity(new Intent(MenuPedidoActivity.this, DetallePanActivity.class));
-
+        pedido.append("\n"+datos[i]);
       }
-    });*/
+    });
+    //lista.setMinimumHeight(scheight);
+
+    //Toast.makeText(this, "Largo de la pantalla: "+scwidth+"px, alto de la pantalla: "+scheight+"px", Toast.LENGTH_LONG).show();
+
   }
 }

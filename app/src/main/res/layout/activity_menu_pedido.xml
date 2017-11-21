@@ -14,13 +14,33 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/bienvenida"
-    android:text="Seleccione su pan"
+    android:text="Crea tu propio pan"
     android:layout_centerHorizontal="true"
     android:textSize="25dp"
     />
-  <ListView android:id="@+id/lista"
-    android:layout_width="match_parent"
+
+  <ListView
+    android:layout_width="wrap_content"
+    android:layout_height="200dp"
+    android:id="@+id/lista"
+    android:layout_below="@+id/bienvenida" />
+
+  <TextView
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/bienvenida"/>
+    android:id="@+id/descpedido"
+    android:text="Su pan consta de: \n"
+    android:layout_below="@id/lista"
+    android:textSize="15dp"
+    android:textStyle="bold"
+    />
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/pedido"
+    android:layout_below="@+id/descpedido"
+    android:text=""
+    />
+
 
 </RelativeLayout>
