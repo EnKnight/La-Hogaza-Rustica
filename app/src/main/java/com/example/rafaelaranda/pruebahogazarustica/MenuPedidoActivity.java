@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,17 +22,37 @@ import com.google.firebase.database.ValueEventListener;
 public class MenuPedidoActivity extends AppCompatActivity {
   private ValueEventListener valueEventListener;
   private DatabaseReference ingredientesref;
-  private String ingredientes[];
+  //private String ingredientes[];
   private static String[] datos = {"Chile serrano","Ajo","Orégano","Avena con salvado","Zanahoria", "Chocolate", "Café"};
   public static String ingredientesel;
   private ListView lista;
-
   ArrayAdapter<String> adaptador;
+  private CheckBox ingredientes[] = new CheckBox[datos.length];
+  private RelativeLayout layout;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_menu_pedido);
+
+    ScrollView sv = new ScrollView(this);
+    final LinearLayout ll = new LinearLayout(this);
+    ll.setOrientation(LinearLayout.VERTICAL);
+    sv.addView(ll);
+
+    layout = (RelativeLayout)findViewById(R.id.layout);
+
+    for(byte i=0; i<datos.length; i++){
+      ingredientes[i] = new CheckBox(getApplicationContext());
+      ingredientes[i].setText(datos[i]);
+      ingredientes[i].setEnabled(false);
+      //ingredientes[i].
+      ll.addView(ingredientes[i]);
+      //layout.addView(ingredientes[i]);
+
+    }
+
+    Toast.makeText(this, "ingredientes: "+ingredientes.length, Toast.LENGTH_LONG).show();
 
     /*ingredientesref = FirebaseDatabase.getInstance().getReference().child("pan");
     valueEventListener = new ValueEventListener() {
@@ -49,20 +73,15 @@ public class MenuPedidoActivity extends AppCompatActivity {
     ingredientesref.addListenerForSingleValueEvent(valueEventListener);*/
 
     adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, datos);
-    lista = (ListView)findViewById(R.id.lista);
+    /*lista = (ListView)findViewById(R.id.lista);
     lista.setAdapter(adaptador);
     lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         ingredientesel = datos[i];
         startActivity(new Intent(MenuPedidoActivity.this, DetallePanActivity.class));
-        /*try{
-          ingredientesel = ingredientes[i];
-          Toast.makeText(getApplicationContext(), "Ingrediente seleccionado: "+ingredientesel, Toast.LENGTH_LONG).show();
-        }catch (Exception e){
-          Toast.makeText(MenuPedidoActivity.this, "Error: "+e.toString(), Toast.LENGTH_LONG).show();
-        }*/
+
       }
-    });
+    });*/
   }
 }
