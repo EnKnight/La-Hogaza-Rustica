@@ -23,24 +23,58 @@
     android:layout_width="wrap_content"
     android:layout_height="200dp"
     android:id="@+id/lista"
+    android:layout_marginTop="12dp"
     android:layout_below="@+id/bienvenida" />
 
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/descpedido"
-    android:text="Su pan consta de: \n"
+    android:text="Su pan consta de:"
     android:layout_below="@id/lista"
     android:textSize="15dp"
     android:textStyle="bold"
+    android:layout_marginTop="12dp"
     />
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:id="@+id/scrollView"
+    android:layout_below="@id/lista">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:id="@+id/pedido"
+      android:layout_below="@+id/descpedido"
+      android:text=""
+      />
+  </ScrollView>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/line1"
+    android:layout_below="@id/scrollView">
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/resetear"
+      android:layout_marginTop="12dp"
+      android:layout_centerHorizontal="true"
+      android:text="Limpiar pedido"
+      />
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/agregarcarrito"
+      android:layout_marginTop="12dp"
+      android:layout_centerHorizontal="true"
+      android:text="Añadir al carrito"
+      />
+  </LinearLayout>
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/pedido"
-    android:layout_below="@+id/descpedido"
-    android:text=""
-    />
-
+    android:layout_above="@+id/line1"
+    android:text="holis"/>
 
 </RelativeLayout>
