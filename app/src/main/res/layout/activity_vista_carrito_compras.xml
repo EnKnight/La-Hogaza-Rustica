@@ -24,10 +24,18 @@
     android:id="@+id/pedido"
     android:text=""/>
 
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/costopedido"
+    android:layout_below="@+id/pedido"
+    android:text="Costo total del pedido: $0"/>
+
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/pedido">
+    android:layout_below="@+id/costopedido"
+    android:layout_marginTop="15dp">
     <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -43,7 +51,7 @@
     <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Agregar \notro pan"
+      android:text="Limpiar \npedido"
       android:id="@+id/resetear"
       />
   </LinearLayout>

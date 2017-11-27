@@ -40,6 +40,7 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:id="@+id/scrollView"
+    android:layout_marginTop="15dp"
     android:layout_below="@id/lista">
     <TextView
       android:layout_width="wrap_content"
@@ -60,21 +61,31 @@
       android:id="@+id/resetear"
       android:layout_marginTop="12dp"
       android:layout_centerHorizontal="true"
-      android:text="Limpiar pedido"
+      android:text="Limpiar \npedido"
       />
     <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/agregarcarrito"
       android:layout_marginTop="12dp"
+      android:layout_marginLeft="10dp"
       android:layout_centerHorizontal="true"
-      android:text="Añadir al carrito"
+      android:text="Añadir al \ncarrito"
+      />
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/vercarrito"
+      android:layout_marginTop="12dp"
+      android:layout_centerHorizontal="true"
+      android:text="Ver \ncarrito"
       />
   </LinearLayout>
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_above="@+id/line1"
-    android:text="holis"/>
+    android:id="@+id/preciopan"
+    android:text="Total del pan creado: $"/>
 
 </RelativeLayout>

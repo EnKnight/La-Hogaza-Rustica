@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class MenuPedidoActivity extends AppCompatActivity {
   private ValueEventListener valueEventListener;
   private DatabaseReference ingredientesref;
-  private TextView pedido;
+  private TextView pedido, preciopantxt;
   //private String ingredientes[];
   private static String[] datos = {"Chile serrano","Ajo","Orégano","Avena con salvado","Zanahoria", "Chocolate", "Café"/*,
     "Chile serrano","Ajo","Orégano","Avena con salvado","Zanahoria", "Chocolate", "Café"*/};
@@ -38,11 +38,11 @@ public class MenuPedidoActivity extends AppCompatActivity {
   private RelativeLayout layout;
   private DisplayMetrics displayMetrics = new DisplayMetrics();
   private int scwidth, scheight;
-  public static int totaling;
+  public static int totaling, preciopan;
   private String ingpedido[]/*,panescreados[][]*/;
   private boolean ingselected[], pancreado;
   public static ArrayList<String[]> panescreados = new ArrayList<String[]>();
-  private Button agregarcarrito, resetear;
+  private Button agregarcarrito, resetear, vercarrito;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,8 @@ public class MenuPedidoActivity extends AppCompatActivity {
     pedido = (TextView)findViewById(R.id.pedido);
     agregarcarrito = (Button)findViewById(R.id.agregarcarrito);
     resetear = (Button)findViewById(R.id.resetear);
+    vercarrito = (Button)findViewById(R.id.vercarrito);
+    preciopantxt = (TextView)findViewById(R.id.preciopan);
 
     adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, datos);
     lista.setAdapter(adaptador);
@@ -70,16 +72,21 @@ public class MenuPedidoActivity extends AppCompatActivity {
     for(byte i=0; i<datos.length; i++){
       ingselected[i] = false;
     }
-    totaling = 0;
+
+    totaling = preciopan = 0;
     lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if(!ingselected[i]){
+          if(preciopan==0){
+            preciopan = 50;
+          }
           pedido.append("\n -"+datos[i]);
           ingpedido[totaling] = datos[i];
           ingselected[i] = true;
           pancreado = true;
           totaling++;
+          preciopantxt.setText("Total del pan creado: $"+preciopan);
         } else{
           Toast.makeText(getApplicationContext(), "El ingrediente "+datos[i]+" ya fue agregado al pedido", Toast.LENGTH_LONG).show();
         }
@@ -97,6 +104,13 @@ public class MenuPedidoActivity extends AppCompatActivity {
         } else{
           Toast.makeText(getApplicationContext(), "Favor de elegir al menos un ingrediente para crear su pan", Toast.LENGTH_LONG).show();
         }
+      }
+    });
+
+    vercarrito.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        startActivity(new Intent(MenuPedidoActivity.this, VistaCarritoComprasActivity.class));
       }
     });
 
