@@ -21,7 +21,7 @@
 
   <ListView
     android:layout_width="wrap_content"
-    android:layout_height="200dp"
+    android:layout_height="150dp"
     android:id="@+id/lista"
     android:layout_marginTop="12dp"
     android:layout_below="@+id/bienvenida" />
@@ -38,7 +38,7 @@
     />
   <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="120dp"
     android:id="@+id/scrollView"
     android:layout_marginTop="15dp"
     android:layout_below="@id/lista">
@@ -51,10 +51,32 @@
       />
   </ScrollView>
   <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/line2"
+    android:layout_below="@+id/scrollView">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Tamaño"
+      android:id="@+id/tamtxt"
+      android:layout_below="@+id/scrollView"/>
+    <Spinner android:id="@+id/CmbOpciones"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+  </LinearLayout>
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/line2"
+    android:id="@+id/preciopan"
+    android:text="Total del pan creado: $0"/>
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/line1"
-    android:layout_below="@id/scrollView">
+    android:layout_marginTop="10dp"
+    android:layout_below="@id/preciopan">
     <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -81,11 +103,6 @@
       android:text="Ver \ncarrito"
       />
   </LinearLayout>
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_above="@+id/line1"
-    android:id="@+id/preciopan"
-    android:text="Total del pan creado: $"/>
+
 
 </RelativeLayout>

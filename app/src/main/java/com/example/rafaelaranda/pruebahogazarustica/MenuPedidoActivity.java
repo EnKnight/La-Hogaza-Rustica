@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,11 +30,16 @@ public class MenuPedidoActivity extends AppCompatActivity {
   private DatabaseReference ingredientesref;
   private TextView pedido, preciopantxt;
   //private String ingredientes[];
-  private static String[] datos = {"Chile serrano","Ajo","Orégano","Avena con salvado","Zanahoria", "Chocolate", "Café"/*,
-    "Chile serrano","Ajo","Orégano","Avena con salvado","Zanahoria", "Chocolate", "Café"*/};
+  private static String[] datos = {"Chile serrano","Ajo","Orégano","Zanahoria", "Chocolate", "Café", "Amaranto", "Ajonjolí",
+  "Avena", "Canela", "Chía", "Linaza", "Salvado", "Semillas de girasol", "Semillas de calabaza"}, tam = {"Chico", "Mediano", "Grande"};
   public static String ingredientesel;
+  public static int tamanio;
+
   private ListView lista;
+  ArrayAdapter<String> adaptadortam;
   ArrayAdapter<String> adaptador;
+  ArrayAdapter<CharSequence> adapter;
+
   private CheckBox ingredientes[] = new CheckBox[datos.length];
   private RelativeLayout layout;
   private DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -43,6 +49,7 @@ public class MenuPedidoActivity extends AppCompatActivity {
   private boolean ingselected[], pancreado;
   public static ArrayList<String[]> panescreados = new ArrayList<String[]>();
   private Button agregarcarrito, resetear, vercarrito;
+  private Spinner cmbOpciones;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,13 @@ public class MenuPedidoActivity extends AppCompatActivity {
     preciopantxt = (TextView)findViewById(R.id.preciopan);
 
     adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, datos);
+    adaptadortam = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tam);
+    adapter = ArrayAdapter.createFromResource(this, R.array.valores_array, android.R.layout.simple_spinner_item);
+    cmbOpciones = (Spinner)findViewById(R.id.CmbOpciones);
+
+    adaptadortam.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    cmbOpciones.setAdapter(adapter);
+
     lista.setAdapter(adaptador);
 
     ingpedido = new String[datos.length];
@@ -119,6 +133,16 @@ public class MenuPedidoActivity extends AppCompatActivity {
       public void onClick(View view) {
         Toast.makeText(getApplicationContext(), "Favor de elegir al menos un ingrediente para crear su pan", Toast.LENGTH_LONG).show();
         resetearValores();
+      }
+    });
+
+    cmbOpciones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      public void onItemSelected(AdapterView<?> parent, android.view.View v, int position, long id) {
+        tamanio = position;
+      }
+
+      public void onNothingSelected(AdapterView<?> parent) {
+
       }
     });
     //lista.setMinimumHeight(scheight);
