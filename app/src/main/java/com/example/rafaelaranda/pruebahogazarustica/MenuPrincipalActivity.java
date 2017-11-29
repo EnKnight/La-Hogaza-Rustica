@@ -27,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MenuPrincipalActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener, OnMapReadyCallback {
-  private TextView lblLatitud, lblLongitud, lblCielo;
+  //private TextView lblLatitud, lblLongitud, lblCielo;
   private Button pedido;
   public static Location lastLocation;
   public static  LatLng posped;
@@ -46,6 +47,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   private FirebaseAuth auth;
   private GoogleMap map;
   private MapFragment mapFragment;
+  private Marker marker;
   private static boolean mapReady = false, markerSet = false;
 
   @Override
@@ -56,6 +58,9 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
     mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
     mapFragment.getMapAsync(this);
 
+    if(IniciarSesionActivity.useremail != null){
+      //Toast.makeText(this, "Bienvenido(a) de nuevo"+IniciarSesionActivity.useremail, Toast.LENGTH_LONG).show();
+    }
 
     /*DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
     float dpHeight = displayMetrics.heightPixels / displayMetrics.density;*/
@@ -91,9 +96,9 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
         //Log.e(TAGLOG, "Error!", databaseError.toException());
       }
     });*/
+    //lblLatitud = (TextView) findViewById(R.id.lblLatitud);
+    //lblLongitud = (TextView) findViewById(R.id.lblLongitud);
     //lblCielo = (TextView)findViewById(R.id.cielo);
-    lblLatitud = (TextView) findViewById(R.id.lblLatitud);
-    lblLongitud = (TextView) findViewById(R.id.lblLongitud);
     pedido = (Button) findViewById(R.id.pedido);
     if(markerSet){
       pedido.setEnabled(true);
@@ -104,7 +109,9 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
     pedido.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-
+        markerSet = false;
+        pedido.setEnabled(false);
+        marker.remove();
         startActivity(new Intent(MenuPrincipalActivity.this, MenuPedidoActivity.class));
       }
     });
@@ -112,7 +119,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
     //Toast.makeText(this, "Densidad de pixeles de la pantalla: "+dpHeight, Toast.LENGTH_LONG).show();
   }
 
-  private void updateUI(Location loc) {
+  /*private void updateUI(Location loc) {
     if (loc != null) {
       lblLatitud.setText("Latitud: " + String.valueOf(loc.getLatitude()));
       lblLongitud.setText("Longitud: " + String.valueOf(loc.getLongitude()));
@@ -120,7 +127,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
       lblLatitud.setText("Latitud: (desconocida)");
       lblLongitud.setText("Longitud: (desconocida)");
     }
-  }
+  }*/
 
   @Override
   public void onConnectionFailed(ConnectionResult result) {
@@ -140,7 +147,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
       // permission has been granted, continue as usual
       lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
       moverMapaUltimaPosicionUsuario(lastLocation);
-      updateUI(lastLocation);
+      //updateUI(lastLocation);
     }
 
   }
@@ -161,7 +168,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
         }
         lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
         moverMapaUltimaPosicionUsuario(lastLocation);
-        updateUI(lastLocation);
+        //updateUI(lastLocation);
       } else {
         // Permission was denied or request was cancelled
       }
@@ -187,7 +194,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   @Override
   public void onLocationChanged(Location location) {
     Toast.makeText(this, "Latitud: "+location.getLatitude()+", Longitud: "+location.getLongitude(), Toast.LENGTH_LONG).show();
-    updateUI(location);
+    //updateUI(location);
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
       // Check Permissions Now
       ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
@@ -195,7 +202,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
       // permission has been granted, continue as usual
       lastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
       moverMapaUltimaPosicionUsuario(lastLocation);
-      updateUI(lastLocation);
+      //updateUI(lastLocation);
     }
   }
 
@@ -226,7 +233,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
       @Override
       public void onMapLongClick(LatLng location) {
         if(!markerSet){
-          map.addMarker(new MarkerOptions().position(location).title("pedido"));
+          marker = map.addMarker(new MarkerOptions().position(location).title("pedido"));
           posped = location;
           markerSet = true;
           pedido.setEnabled(true);
@@ -257,13 +264,13 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
         //map.moveCamera(camUpd1);
         map.animateCamera(camUpd);
         if(!markerSet){
-          map.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("pedido"));
+          /*map.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("pedido"));
           markerSet = true;
-          pedido.setEnabled(true);
+          pedido.setEnabled(true);*/
         }
 
       } else {
-        Toast.makeText(getApplicationContext(), "Ubicación del usuario no obtenida", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Ubicación del usuario no obtenida", Toast.LENGTH_LONG).show();
       }
     }
   }

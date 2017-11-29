@@ -31,7 +31,7 @@ public class MenuPedidoActivity extends AppCompatActivity {
   private TextView pedido, preciopantxt;
   //private String ingredientes[];
   private static String[] datos = {"Chile serrano","Ajo","Orégano","Zanahoria", "Chocolate", "Café", "Amaranto", "Ajonjolí",
-  "Avena", "Canela", "Chía", "Linaza", "Salvado", "Semillas de girasol", "Semillas de calabaza"}, tam = {"Chico", "Mediano", "Grande"};
+  "Avena", "Canela", "Chía", "Linaza", "Salvado", "Semillas de girasol", "Semillas de calabaza", "Pasas", "Nueces", "Almendras"}, tam = {"Chico", "Mediano", "Grande"};
   public static String ingredientesel;
   public static int tamanio;
 
@@ -40,11 +40,11 @@ public class MenuPedidoActivity extends AppCompatActivity {
   ArrayAdapter<String> adaptador;
   ArrayAdapter<CharSequence> adapter;
 
-  private CheckBox ingredientes[] = new CheckBox[datos.length];
-  private RelativeLayout layout;
+  //private CheckBox ingredientes[] = new CheckBox[datos.length];
+  //private RelativeLayout layout;
   private DisplayMetrics displayMetrics = new DisplayMetrics();
   private int scwidth, scheight;
-  public static int totaling, preciopan;
+  public static int totaling, preciopan, costoextra=0, costopan;
   private String ingpedido[]/*,panescreados[][]*/;
   private boolean ingselected[], pancreado;
   public static ArrayList<String[]> panescreados = new ArrayList<String[]>();
@@ -61,27 +61,28 @@ public class MenuPedidoActivity extends AppCompatActivity {
     scwidth = displayMetrics.widthPixels;
     scheight = displayMetrics.heightPixels;
 
+
     lista = (ListView)findViewById(R.id.lista);
     pedido = (TextView)findViewById(R.id.pedido);
     agregarcarrito = (Button)findViewById(R.id.agregarcarrito);
     resetear = (Button)findViewById(R.id.resetear);
     vercarrito = (Button)findViewById(R.id.vercarrito);
     preciopantxt = (TextView)findViewById(R.id.preciopan);
+    cmbOpciones = (Spinner)findViewById(R.id.CmbOpciones);
 
     adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, datos);
     adaptadortam = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tam);
     adapter = ArrayAdapter.createFromResource(this, R.array.valores_array, android.R.layout.simple_spinner_item);
-    cmbOpciones = (Spinner)findViewById(R.id.CmbOpciones);
-
     adaptadortam.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    cmbOpciones.setAdapter(adapter);
 
+    cmbOpciones.setAdapter(adapter);
     lista.setAdapter(adaptador);
 
     ingpedido = new String[datos.length];
     ingselected = new boolean[datos.length];
     //panescreados = new ArrayList<String[]>();
     pancreado = false;
+    costopan = 0;
 
     for(byte i=0; i<datos.length; i++){
       ingselected[i] = false;
@@ -93,7 +94,20 @@ public class MenuPedidoActivity extends AppCompatActivity {
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if(!ingselected[i]){
           if(preciopan==0){
-            preciopan = 50;
+            if(tamanio == 0){
+              preciopan = 30;
+            } else if(tamanio == 1){
+              preciopan = 40;
+            } else if(tamanio == 2){
+              preciopan = 50;
+            }
+          }
+          if(datos[i].equals("Pasas")){
+            costoextra += 5;
+            preciopan += 5;
+          } else if(datos[i].equals("Nueces") || datos[i].equals("Almendras")){
+            costoextra += 10;
+            preciopan += 10;
           }
           pedido.append("\n -"+datos[i]);
           ingpedido[totaling] = datos[i];
@@ -110,14 +124,15 @@ public class MenuPedidoActivity extends AppCompatActivity {
     agregarcarrito.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        if(pancreado){
-          panescreados.add(ingpedido);
-          resetearValores();
-          //Toast.makeText(getApplicationContext(), "Se tiene un total de: "+panescreados.size()+" pan(es) en el carrito", Toast.LENGTH_LONG).show();
-          startActivity(new Intent(MenuPedidoActivity.this, VistaCarritoComprasActivity.class));
-        } else{
-          Toast.makeText(getApplicationContext(), "Favor de elegir al menos un ingrediente para crear su pan", Toast.LENGTH_LONG).show();
-        }
+      if(pancreado){
+        panescreados.add(ingpedido);
+        costopan = preciopan;
+        //Toast.makeText(getApplicationContext(), "Se tiene un total de: "+panescreados.size()+" pan(es) en el carrito", Toast.LENGTH_LONG).show();
+        resetearValores();
+        startActivity(new Intent(MenuPedidoActivity.this, VistaCarritoComprasActivity.class));
+      } else{
+        Toast.makeText(getApplicationContext(), "Favor de elegir al menos un ingrediente para crear su pan", Toast.LENGTH_LONG).show();
+      }
       }
     });
 
@@ -131,7 +146,7 @@ public class MenuPedidoActivity extends AppCompatActivity {
     resetear.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Toast.makeText(getApplicationContext(), "Favor de elegir al menos un ingrediente para crear su pan", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Favor de elegir al menos un ingrediente para crear su pan", Toast.LENGTH_LONG).show();
         resetearValores();
       }
     });
@@ -139,9 +154,23 @@ public class MenuPedidoActivity extends AppCompatActivity {
     cmbOpciones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       public void onItemSelected(AdapterView<?> parent, android.view.View v, int position, long id) {
         tamanio = position;
+        if(position == 0){
+          preciopan = 30;
+          preciopan += costoextra;
+        } else if(position == 1){
+          preciopan = 40;
+          preciopan += costoextra;
+        } else{
+          preciopan = 50;
+          preciopan += costoextra;
+        }
+        preciopantxt.setText("Total del pan creado: $"+preciopan);
+
+        //Toast.makeText(getApplicationContext(), "Tamaño: "+tam[tamanio], Toast.LENGTH_LONG).show();
       }
 
       public void onNothingSelected(AdapterView<?> parent) {
+        Toast.makeText(getApplicationContext(), "Favor de seleccionar un tamaño para continuar", Toast.LENGTH_LONG).show();
 
       }
     });
@@ -159,5 +188,8 @@ public class MenuPedidoActivity extends AppCompatActivity {
     pedido.setText("");
     pancreado = false;
     totaling = 0;
+    preciopan = 0;
+    costoextra = 0;
+    preciopantxt.setText("Total del pan creado: $0");
   }
 }

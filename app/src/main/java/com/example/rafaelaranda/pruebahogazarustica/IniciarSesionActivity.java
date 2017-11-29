@@ -21,6 +21,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
   private Button ingresar;
   private Intent intent;
   private FirebaseAuth auth;
+  public static String useremail;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,11 @@ public class IniciarSesionActivity extends AppCompatActivity {
     //Get Firebase auth instance
     auth = FirebaseAuth.getInstance();
     if (auth.getCurrentUser() != null) {
+      try{
+        useremail = auth.getCurrentUser().getEmail();
+      } catch (Exception e){
+        Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
+      }
       startActivity(new Intent(IniciarSesionActivity.this, MenuPrincipalActivity.class));
       finish();
     }

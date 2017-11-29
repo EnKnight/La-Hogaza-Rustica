@@ -15,7 +15,7 @@ public class VistaCarritoComprasActivity extends AppCompatActivity {
   private String descpedido[];
   private Button agregar, pagar, resetar;
   private boolean carritoval = false;
-  private int costopedido=0;
+  private static int costopedido=0;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +28,12 @@ public class VistaCarritoComprasActivity extends AppCompatActivity {
     resetar = (Button)findViewById(R.id.resetear);
     costopedidotxt = (TextView)findViewById(R.id.costopedido);
 
+    //costopedido=0;
+
     if(MenuPedidoActivity.panescreados.size() > 0){
       carritoval = true;
       pedido.setText("");
-      costopedido = MenuPedidoActivity.panescreados.size() * 50;
+      costopedido += MenuPedidoActivity.costopan;
       costopedidotxt.setText("Costo total del pedido: $"+costopedido);
 
       for(int i=0, aux; i<MenuPedidoActivity.panescreados.size(); i++) {
@@ -43,6 +45,7 @@ public class VistaCarritoComprasActivity extends AppCompatActivity {
             pedido.append(descpedido[j] + ", ");
           }
         }
+        //pedido.append("Tamaño: ");
       }
 
     } else{
@@ -60,9 +63,11 @@ public class VistaCarritoComprasActivity extends AppCompatActivity {
       @Override
       public void onClick(View view) {
         if(carritoval){
-
+          startActivity(new Intent(VistaCarritoComprasActivity.this, MenuPrincipalActivity.class));
+          Toast.makeText(getApplicationContext(), "Pedido realizado exitosamente", Toast.LENGTH_LONG).show();
+          resetear();
         } else{
-          Toast.makeText(getApplicationContext(), "Favor de añadir por lo menos un pan al pedido para conntinuar", Toast.LENGTH_LONG).show();
+          Toast.makeText(getApplicationContext(), "Favor de añadir por lo menos un pan al pedido para continuar", Toast.LENGTH_LONG).show();
         }
       }
     });
@@ -70,10 +75,15 @@ public class VistaCarritoComprasActivity extends AppCompatActivity {
     resetar.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        MenuPedidoActivity.panescreados = new ArrayList<String[]>();
-        pedido.setText("Aún no se han añadido panes al carrito de compras");
-        carritoval = false;
+        resetear();
       }
     });
+  }
+
+  public void resetear(){
+    MenuPedidoActivity.panescreados = new ArrayList<String[]>();
+    costopedido = 0;
+    pedido.setText("Aún no se han añadido panes al carrito de compras");
+    carritoval = false;
   }
 }

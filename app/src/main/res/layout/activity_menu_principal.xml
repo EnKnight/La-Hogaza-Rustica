@@ -9,11 +9,20 @@
   android:paddingTop="@dimen/activity_vertical_margin"
   tools:context="com.example.rafaelaranda.pruebahogazarustica.MenuPrincipalActivity">
 
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/bienvenida"
+    android:text="Para indicar el punto deseado del pedido, mantenga presionado el punto en el mapa"
+    android:textSize="15dp"/>
+
   <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.MapFragment"
     android:layout_width="match_parent"
+    android:layout_below="@+id/bienvenida"
     android:layout_height="400dp"
+    android:layout_marginTop="15dp"
     />
   <!-- <TextView
     android:layout_width="wrap_content"
@@ -32,7 +41,7 @@
     android:id="@+id/humedad"
     android:layout_below="@+id/temperatura"
     android:text="humedad"/> -->
-  <TextView android:id="@+id/lblLatitud"
+   <!--<TextView android:id="@+id/lblLatitud"
     android:layout_below="@+id/map"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -42,12 +51,12 @@
     android:layout_below="@+id/lblLatitud"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Longitud: " />
+    android:text="Longitud: " /> -->
 
   <Button android:id="@+id/pedido"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/lblLongitud"
+    android:layout_below="@+id/map"
     android:text="Proceder a pedido" />
 
   <!-- <TextView
