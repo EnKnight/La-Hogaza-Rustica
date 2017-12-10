@@ -43,7 +43,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   public static  LatLng posped;
   private GoogleApiClient apiClient;
   private static final int REQUEST_LOCATION = 2;
-  private DatabaseReference dbCielo = FirebaseDatabase.getInstance().getReference().child("prediccion-hoy").child("cielo");
+  //private DatabaseReference dbCielo = FirebaseDatabase.getInstance().getReference().child("prediccion-hoy").child("cielo");
   private FirebaseAuth auth;
   private GoogleMap map;
   private MapFragment mapFragment;
@@ -112,7 +112,7 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
         markerSet = false;
         pedido.setEnabled(false);
         marker.remove();
-        startActivity(new Intent(MenuPrincipalActivity.this, MenuPedidoActivity.class));
+        startActivity(new Intent(MenuPrincipalActivity.this, ConcluirPedidoActivity.class));
       }
     });
 

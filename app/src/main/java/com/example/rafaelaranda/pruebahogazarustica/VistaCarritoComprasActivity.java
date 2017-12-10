@@ -15,7 +15,7 @@ public class VistaCarritoComprasActivity extends AppCompatActivity {
   private String descpedido[];
   private Button agregar, pagar, resetar;
   private boolean carritoval = false;
-  private static int costopedido=0;
+  public static int costopedido=0;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class VistaCarritoComprasActivity extends AppCompatActivity {
       public void onClick(View view) {
         if(carritoval){
           startActivity(new Intent(VistaCarritoComprasActivity.this, MenuPrincipalActivity.class));
-          Toast.makeText(getApplicationContext(), "Pedido realizado exitosamente", Toast.LENGTH_LONG).show();
+          //Toast.makeText(getApplicationContext(), "Pedido realizado exitosamente", Toast.LENGTH_LONG).show();
           resetear();
         } else{
           Toast.makeText(getApplicationContext(), "Favor de añadir por lo menos un pan al pedido para continuar", Toast.LENGTH_LONG).show();

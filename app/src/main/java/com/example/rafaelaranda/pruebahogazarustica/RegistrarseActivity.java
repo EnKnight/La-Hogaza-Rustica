@@ -17,7 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistrarseActivity extends AppCompatActivity {
-  private EditText nombre, apellido, correo, dia, mes, anio, passwd, passwd2;
+  private EditText nombre, apellido, correo, dia, mes, anio, tel, passwd, passwd2;
   private Button registrarse;
   private FirebaseAuth auth;
   private Intent intent;
@@ -38,6 +38,7 @@ public class RegistrarseActivity extends AppCompatActivity {
     dia = (EditText)findViewById(R.id.dia);
     mes = (EditText)findViewById(R.id.mes);
     anio = (EditText)findViewById(R.id.anio);
+    tel = (EditText)findViewById(R.id.tel);
     passwd = (EditText)findViewById(R.id.passwd);
     passwd2 = (EditText)findViewById(R.id.passwd2);
     progressBar = (ProgressBar)findViewById(R.id.progressBar);
@@ -61,6 +62,12 @@ public class RegistrarseActivity extends AppCompatActivity {
           Toast.makeText(getApplicationContext(), "Favor de ingresar su fecha de nacimiento completa para continuar", Toast.LENGTH_LONG).show();
           return;
         }
+
+        if(TextUtils.isEmpty(tel.getText().toString())){
+          Toast.makeText(getApplicationContext(), "Favor de ingresar su número de teléfono para continuar", Toast.LENGTH_LONG).show();
+          return;
+        }
+
         if(TextUtils.isEmpty(passwd.getText().toString())){
           Toast.makeText(getApplicationContext(), "Favor de ingresar su nueva contraseña para continuar", Toast.LENGTH_LONG).show();
           return;
@@ -81,6 +88,7 @@ public class RegistrarseActivity extends AppCompatActivity {
         }
 
         //create user
+
         auth.createUserWithEmailAndPassword(correo.getText().toString().trim(), passwd.getText().toString().trim())
           .addOnCompleteListener(RegistrarseActivity.this, new OnCompleteListener<AuthResult>() {
             @Override

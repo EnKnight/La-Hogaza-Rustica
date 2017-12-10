@@ -39,7 +39,8 @@
       android:theme="@style/AppTheme.NoActionBar" />
     <activity android:name=".MenuPedidoActivity" />
     <activity android:name=".DetallePanActivity" />
-    <activity android:name=".VistaCarritoComprasActivity"></activity>
+    <activity android:name=".VistaCarritoComprasActivity" />
+    <activity android:name=".ConcluirPedidoActivity"></activity>
   </application>
 
 </manifest>

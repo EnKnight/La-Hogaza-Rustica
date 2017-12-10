@@ -36,7 +36,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
       } catch (Exception e){
         Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
       }
-      startActivity(new Intent(IniciarSesionActivity.this, MenuPrincipalActivity.class));
+      startActivity(new Intent(IniciarSesionActivity.this, MenuPedidoActivity.class));
       finish();
     }
 
@@ -58,8 +58,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
           return;
         }
 
-        auth.signInWithEmailAndPassword(correo.getText().toString(), passwd.getText().toString())
-          .addOnCompleteListener(IniciarSesionActivity.this, new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(correo.getText().toString(), passwd.getText().toString()).addOnCompleteListener(IniciarSesionActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
               // If sign in fails, display a message to the user. If sign in succeeds

@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +51,8 @@ public class MenuPedidoActivity extends AppCompatActivity {
   public static ArrayList<String[]> panescreados = new ArrayList<String[]>();
   private Button agregarcarrito, resetear, vercarrito;
   private Spinner cmbOpciones;
+  private FirebaseAuth auth;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,14 @@ public class MenuPedidoActivity extends AppCompatActivity {
     scwidth = displayMetrics.widthPixels;
     scheight = displayMetrics.heightPixels;
 
+    //Get Firebase auth instance
+    auth = FirebaseAuth.getInstance();
+
+    if (auth.getCurrentUser() == null) {
+      Toast.makeText(this, "Favor de identificarse antes de continuar", Toast.LENGTH_LONG).show();
+      startActivity(new Intent(MenuPedidoActivity.this, IniciarSesionActivity.class));
+      finish();
+    }
 
     lista = (ListView)findViewById(R.id.lista);
     pedido = (TextView)findViewById(R.id.pedido);
@@ -124,15 +135,15 @@ public class MenuPedidoActivity extends AppCompatActivity {
     agregarcarrito.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-      if(pancreado){
-        panescreados.add(ingpedido);
-        costopan = preciopan;
-        //Toast.makeText(getApplicationContext(), "Se tiene un total de: "+panescreados.size()+" pan(es) en el carrito", Toast.LENGTH_LONG).show();
-        resetearValores();
-        startActivity(new Intent(MenuPedidoActivity.this, VistaCarritoComprasActivity.class));
-      } else{
-        Toast.makeText(getApplicationContext(), "Favor de elegir al menos un ingrediente para crear su pan", Toast.LENGTH_LONG).show();
-      }
+        if(pancreado){
+          panescreados.add(ingpedido);
+          costopan = preciopan;
+          //Toast.makeText(getApplicationContext(), "Se tiene un total de: "+panescreados.size()+" pan(es) en el carrito", Toast.LENGTH_LONG).show();
+          resetearValores();
+          startActivity(new Intent(MenuPedidoActivity.this, VistaCarritoComprasActivity.class));
+        } else{
+          Toast.makeText(getApplicationContext(), "Favor de elegir al menos un ingrediente para crear su pan", Toast.LENGTH_LONG).show();
+        }
       }
     });
 
