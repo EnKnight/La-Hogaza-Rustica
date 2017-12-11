@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
     invitado = (Button) findViewById(R.id.invitado);
     iniciarSesion = (Button)findViewById(R.id.iniciarSesion);
     logo = (ImageView)findViewById(R.id.logo);
+
     logo.setAlpha((float)0.1);
+
     new Thread(new Runnable() {
       public void run() {
         //Aquí ejecutamos nuestras tareas costosas
@@ -46,20 +48,6 @@ public class MainActivity extends AppCompatActivity {
         }
       }
     }).start();
-    /*logo.setScaleX((float)0.1);
-    logo.setScaleY((float)0.1);
-
-    for(byte i=0; i<5; i++){
-      logscale += .2;
-      logo.setScaleX(logscale);
-      logo.setScaleY(logscale);
-      try{
-        Thread.sleep(400);
-      }catch(InterruptedException e){
-        Toast.makeText(this, "Error detectado: "+e.toString(), Toast.LENGTH_LONG).show();
-      }
-
-    }*/
 
     auth = FirebaseAuth.getInstance();
 

@@ -54,6 +54,7 @@ public class MenuPedidoActivity extends AppCompatActivity {
   private FirebaseAuth auth;
 
 
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
