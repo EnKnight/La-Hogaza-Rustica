@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,10 +16,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-
+  private ImageView logo;
   private Button registrarse, invitado, iniciarSesion;
   private Intent intent;
   public static FirebaseAuth auth;
+  private float logscale=0;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,36 @@ public class MainActivity extends AppCompatActivity {
     registrarse = (Button) findViewById(R.id.registrarse);
     invitado = (Button) findViewById(R.id.invitado);
     iniciarSesion = (Button)findViewById(R.id.iniciarSesion);
+    logo = (ImageView)findViewById(R.id.logo);
+    logo.setAlpha((float)0.1);
+    new Thread(new Runnable() {
+      public void run() {
+        //Aquí ejecutamos nuestras tareas costosas
+        for(byte i=0; i<10; i++){
+          logscale += .1;
+          logo.setAlpha(logscale);
+          try{
+            Thread.sleep(200);
+          }catch(InterruptedException e){
+            Toast.makeText(getApplicationContext(), "Error detectado: "+e.toString(), Toast.LENGTH_LONG).show();
+          }
+        }
+      }
+    }).start();
+    /*logo.setScaleX((float)0.1);
+    logo.setScaleY((float)0.1);
+
+    for(byte i=0; i<5; i++){
+      logscale += .2;
+      logo.setScaleX(logscale);
+      logo.setScaleY(logscale);
+      try{
+        Thread.sleep(400);
+      }catch(InterruptedException e){
+        Toast.makeText(this, "Error detectado: "+e.toString(), Toast.LENGTH_LONG).show();
+      }
+
+    }*/
 
     auth = FirebaseAuth.getInstance();
 
@@ -36,6 +68,20 @@ public class MainActivity extends AppCompatActivity {
       public void onClick(View view) {
         intent = new Intent(MainActivity.this, RegistrarseActivity.class);
         startActivity(intent);
+        /*new Thread(new Runnable() {
+          public void run() {
+            //Aquí ejecutamos nuestras tareas costosas
+            for(byte i=0; i<5; i++){
+              logscale += .2;
+              logo.setAlpha(logscale);
+              try{
+                Thread.sleep(400);
+              }catch(InterruptedException e){
+                Toast.makeText(getApplicationContext(), "Error detectado: "+e.toString(), Toast.LENGTH_LONG).show();
+              }
+            }
+          }
+        }).start();*/
       }
     });
 
@@ -67,4 +113,5 @@ public class MainActivity extends AppCompatActivity {
       }
     });
   }
+
 }
