@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     logo.setAlpha((float)0.1);
 
-    new Thread(new Runnable() {
+    /*new Thread(new Runnable() {
       public void run() {
         //Aquí ejecutamos nuestras tareas costosas
         for(byte i=0; i<10; i++){
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
           }
         }
       }
-    }).start();
+    }).start();*/
 
     auth = FirebaseAuth.getInstance();
 

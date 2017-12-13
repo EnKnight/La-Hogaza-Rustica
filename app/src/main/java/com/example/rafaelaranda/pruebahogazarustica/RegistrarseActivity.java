@@ -19,6 +19,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class RegistrarseActivity extends AppCompatActivity {
   /*public String nom, ap, correoe, tel;
   public int dia, mes, anio;*/
@@ -28,6 +32,8 @@ public class RegistrarseActivity extends AppCompatActivity {
   private DatabaseReference databaseReference;
   private Intent intent;
   private ProgressBar progressBar;
+  private Date date;
+  private Calendar calendar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,13 @@ public class RegistrarseActivity extends AppCompatActivity {
     //Get Firebase auth instance
     auth = FirebaseAuth.getInstance();
     databaseReference = FirebaseDatabase.getInstance().getReference();
+
+    date = Calendar.getInstance().getTime();
+    calendar = Calendar.getInstance();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    String currentDate = dateFormat.format(calendar.getTime());
+    //Toast.makeText(this, "Dia: "+date.getDay()+", Mes: "+date.getMonth()+", Año: "+date.getYear(), Toast.LENGTH_LONG).show();
+    Toast.makeText(this, ""+currentDate, Toast.LENGTH_LONG).show();
 
     registrarse = (Button)findViewById(R.id.registrarse);
     nombre = (EditText)findViewById(R.id.nombre);
