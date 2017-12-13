@@ -15,11 +15,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegistrarseActivity extends AppCompatActivity {
+  /*public String nom, ap, correoe, tel;
+  public int dia, mes, anio;*/
   private EditText nombre, apellido, correo, dia, mes, anio, tel, passwd, passwd2;
   private Button registrarse;
   private FirebaseAuth auth;
+  private DatabaseReference databaseReference;
   private Intent intent;
   private ProgressBar progressBar;
 
@@ -30,6 +36,7 @@ public class RegistrarseActivity extends AppCompatActivity {
 
     //Get Firebase auth instance
     auth = FirebaseAuth.getInstance();
+    databaseReference = FirebaseDatabase.getInstance().getReference();
 
     registrarse = (Button)findViewById(R.id.registrarse);
     nombre = (EditText)findViewById(R.id.nombre);
@@ -102,12 +109,28 @@ public class RegistrarseActivity extends AppCompatActivity {
                 Toast.makeText(RegistrarseActivity.this, "Authentication failed." + task.getException(),
                   Toast.LENGTH_SHORT).show();
               } else {
-                startActivity(new Intent(RegistrarseActivity.this, MenuPrincipalActivity.class));
+                onAuthSuccess(task.getResult().getUser());
+                //startActivity(new Intent(RegistrarseActivity.this, MenuPrincipalActivity.class));
                 finish();
               }
             }
           });
       }
     });
+  }
+
+  public void onAuthSuccess(FirebaseUser user){
+    writeNewUser(user.getUid(), nombre.getText().toString(), apellido.getText().toString(), correo.getText().toString(), tel.getText().toString(),
+      Integer.parseInt(dia.getText().toString()), Integer.parseInt(mes.getText().toString()), Integer.parseInt(anio.getText().toString()));
+
+    startActivity(new Intent(RegistrarseActivity.this, MenuPrincipalActivity.class));
+
+  }
+  /*public String nom, ap, correoe, tel;
+  public int dia, mes, anio;*/
+  public void writeNewUser(String userId, String nom, String ap, String correoe, String tel, int dia, int mes, int anio){
+    Usuario usuario = new Usuario(nom,ap,correoe,tel,dia,mes,anio);
+
+    databaseReference.child("usuarios").child(userId).setValue(usuario);
   }
 }
