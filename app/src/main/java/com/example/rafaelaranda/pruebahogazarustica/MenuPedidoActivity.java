@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class MenuPedidoActivity extends AppCompatActivity {
   private ValueEventListener valueEventListener;
-  private DatabaseReference ingredientesref;
+  private DatabaseReference databaseReference;
   private TextView pedido, preciopantxt;
   //private String ingredientes[];
   private static String[] datos = {"Chile serrano","Ajo","Orégano","Zanahoria", "Chocolate", "Café", "Amaranto", "Ajonjolí",
@@ -53,8 +53,6 @@ public class MenuPedidoActivity extends AppCompatActivity {
   private Spinner cmbOpciones;
   private FirebaseAuth auth;
 
-
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -67,6 +65,8 @@ public class MenuPedidoActivity extends AppCompatActivity {
 
     //Get Firebase auth instance
     auth = FirebaseAuth.getInstance();
+    //Get Firebase database reference instance
+    databaseReference = FirebaseDatabase.getInstance().getReference();
 
     if (auth.getCurrentUser() == null) {
       Toast.makeText(this, "Favor de identificarse antes de continuar", Toast.LENGTH_LONG).show();

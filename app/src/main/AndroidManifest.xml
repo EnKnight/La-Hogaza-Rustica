@@ -23,24 +23,32 @@
       android:glEsVersion="0x00020000"
       android:required="true" />
 
-    <activity android:name=".MainActivity">
+    <activity android:name=".MainActivity"
+      android:screenOrientation="locked">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name=".IniciarSesionActivity" />
-    <activity android:name=".RegistrarseActivity" />
-    <activity android:name=".MenuPrincipalActivity" />
+    <activity android:name=".IniciarSesionActivity"
+      android:screenOrientation="locked"/>
+    <activity android:name=".RegistrarseActivity"
+      android:screenOrientation="locked"/>
+    <activity android:name=".MenuPrincipalActivity"
+      android:screenOrientation="locked"/>
     <activity
       android:name=".PruebaNavigationDrawerActivity"
       android:label="@string/title_activity_prueba_navigation_drawer"
       android:theme="@style/AppTheme.NoActionBar" />
-    <activity android:name=".MenuPedidoActivity" />
-    <activity android:name=".DetallePanActivity" />
-    <activity android:name=".VistaCarritoComprasActivity" />
-    <activity android:name=".ConcluirPedidoActivity"></activity>
+    <activity android:name=".MenuPedidoActivity"
+      android:screenOrientation="locked"/>
+    <activity android:name=".DetallePanActivity"
+      android:screenOrientation="locked"/>
+    <activity android:name=".VistaCarritoComprasActivity"
+      android:screenOrientation="locked"/>
+    <activity android:name=".ConcluirPedidoActivity"
+      android:screenOrientation="locked"></activity>
   </application>
 
 </manifest>
