@@ -101,6 +101,7 @@ public class MenuPedidoActivity extends AppCompatActivity {
     }
 
     totaling = preciopan = 0;
+
     lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -139,7 +140,6 @@ public class MenuPedidoActivity extends AppCompatActivity {
         if(pancreado){
           panescreados.add(ingpedido);
           costopan = preciopan;
-          //Toast.makeText(getApplicationContext(), "Se tiene un total de: "+panescreados.size()+" pan(es) en el carrito", Toast.LENGTH_LONG).show();
           resetearValores();
           startActivity(new Intent(MenuPedidoActivity.this, VistaCarritoComprasActivity.class));
         } else{
@@ -177,8 +177,7 @@ public class MenuPedidoActivity extends AppCompatActivity {
           preciopan += costoextra;
         }
         preciopantxt.setText("Total del pan creado: $"+preciopan);
-
-        //Toast.makeText(getApplicationContext(), "Tamaño: "+tam[tamanio], Toast.LENGTH_LONG).show();
+        
       }
 
       public void onNothingSelected(AdapterView<?> parent) {
@@ -186,9 +185,7 @@ public class MenuPedidoActivity extends AppCompatActivity {
 
       }
     });
-    //lista.setMinimumHeight(scheight);
 
-    //Toast.makeText(this, "Largo de la pantalla: "+scwidth+"px, alto de la pantalla: "+scheight+"px", Toast.LENGTH_LONG).show();
   }
 
   public void resetearValores(){

@@ -34,6 +34,7 @@ public class RegistrarseActivity extends AppCompatActivity {
   private ProgressBar progressBar;
   private Date date;
   private Calendar calendar;
+  private String fechaing, fechanac;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -139,11 +140,12 @@ public class RegistrarseActivity extends AppCompatActivity {
     startActivity(new Intent(RegistrarseActivity.this, MenuPrincipalActivity.class));
 
   }
-  /*public String nom, ap, correoe, tel;
-  public int dia, mes, anio;*/
+
   public void writeNewUser(String userId, String nom, String ap, String correoe, String tel, int dia, int mes, int anio){
     Usuario usuario = new Usuario(nom,ap,correoe,tel,dia,mes,anio);
 
     databaseReference.child("usuarios").child(userId).setValue(usuario);
+    //databaseReference.child("pedidos").push();
+    //databaseReference.child("usuarios").child(userId).push(usuario);
   }
 }

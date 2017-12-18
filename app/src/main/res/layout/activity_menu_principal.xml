@@ -53,11 +53,20 @@
     android:layout_height="wrap_content"
     android:text="Longitud: " /> -->
 
-  <Button android:id="@+id/pedido"
-    android:layout_width="wrap_content"
+  <LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/map"
-    android:text="Proceder a pedido" />
+    android:id="@+id/line1">
+    <Button android:id="@+id/pedido"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Proceder a \npedido" />
+    <Button android:id="@+id/borrarMarcador"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Borrar \nmarcador" />
+  </LinearLayout>
 
   <!-- <TextView
     android:layout_width="wrap_content"

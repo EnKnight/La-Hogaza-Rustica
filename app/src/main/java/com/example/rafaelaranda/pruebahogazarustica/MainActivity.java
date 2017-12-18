@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     logo.setAlpha((float)0.1);
 
-    /*new Thread(new Runnable() {
+    new Thread(new Runnable() {
       public void run() {
         //Aquí ejecutamos nuestras tareas costosas
         for(byte i=0; i<10; i++){
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
           }
         }
       }
-    }).start();*/
+    }).start();
 
     auth = FirebaseAuth.getInstance();
 
@@ -57,20 +57,6 @@ public class MainActivity extends AppCompatActivity {
       public void onClick(View view) {
         intent = new Intent(MainActivity.this, RegistrarseActivity.class);
         startActivity(intent);
-        /*new Thread(new Runnable() {
-          public void run() {
-            //Aquí ejecutamos nuestras tareas costosas
-            for(byte i=0; i<5; i++){
-              logscale += .2;
-              logo.setAlpha(logscale);
-              try{
-                Thread.sleep(400);
-              }catch(InterruptedException e){
-                Toast.makeText(getApplicationContext(), "Error detectado: "+e.toString(), Toast.LENGTH_LONG).show();
-              }
-            }
-          }
-        }).start();*/
       }
     });
 

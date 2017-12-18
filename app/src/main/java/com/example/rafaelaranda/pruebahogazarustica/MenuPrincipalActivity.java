@@ -38,7 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MenuPrincipalActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener, OnMapReadyCallback {
   //private TextView lblLatitud, lblLongitud, lblCielo;
-  private Button pedido;
+  private Button pedido, borrarMarcador;
   public static Location lastLocation;
   public static  LatLng posped;
   private GoogleApiClient apiClient;
@@ -54,6 +54,9 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_menu_principal);
+
+    pedido = (Button) findViewById(R.id.pedido);
+    borrarMarcador = (Button)findViewById(R.id.borrarMarcador);
 
     mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
     mapFragment.getMapAsync(this);
@@ -90,7 +93,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
         String valor = dataSnapshot.getValue().toString();
         lblCielo.setText(valor);
       }
-
       @Override
       public void onCancelled(DatabaseError databaseError) {
         //Log.e(TAGLOG, "Error!", databaseError.toException());
@@ -99,11 +101,12 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
     //lblLatitud = (TextView) findViewById(R.id.lblLatitud);
     //lblLongitud = (TextView) findViewById(R.id.lblLongitud);
     //lblCielo = (TextView)findViewById(R.id.cielo);
-    pedido = (Button) findViewById(R.id.pedido);
     if(markerSet){
       pedido.setEnabled(true);
+      borrarMarcador.setEnabled(true);
     } else{
       pedido.setEnabled(false);
+      borrarMarcador.setEnabled(false);
     }
 
     pedido.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +116,19 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
         pedido.setEnabled(false);
         marker.remove();
         startActivity(new Intent(MenuPrincipalActivity.this, ConcluirPedidoActivity.class));
+      }
+    });
+
+    borrarMarcador.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        if(markerSet){
+          marker.remove();
+          posped = null;
+          borrarMarcador.setEnabled(false);
+          markerSet = false;
+          pedido.setEnabled(false);
+        }
       }
     });
 
@@ -235,8 +251,10 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
         if(!markerSet){
           marker = map.addMarker(new MarkerOptions().position(location).title("pedido"));
           posped = location;
+          borrarMarcador.setEnabled(true);
           markerSet = true;
           pedido.setEnabled(true);
+
         } else {
           Toast.makeText(getApplicationContext(), "Punto de pedido ya fijado", Toast.LENGTH_LONG).show();
         }
@@ -253,7 +271,6 @@ public class MenuPrincipalActivity extends AppCompatActivity implements GoogleAp
       map.animateCamera(camUpd1);
     } else {
       Toast.makeText(getApplicationContext(), "Ubicación del usuario no obtenida", Toast.LENGTH_LONG).show();
-
     }*/
   }
 
